@@ -11,6 +11,7 @@ public interface ContractService {
     boolean deleteContract(String id);
 
     List<Contract> getContractByCustomerId(String id);
+    List<Contract> getContractByProductId(String id);
 
     boolean updatePremium(ContractDTO contractDTO);
 

@@ -34,6 +34,11 @@ public class ContractServiceImpl implements ContractService{
     }
 
     @Override
+    public List<Contract> getContractByProductId(String id) {
+        return contractDAO.getContractsByProductId(id);
+    }
+
+    @Override
     public boolean updatePremium(ContractDTO contractDTO) {
         Contract contract = new Contract(contractDTO);
         return contractDAO.updatePremium(contract);

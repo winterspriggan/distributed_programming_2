@@ -20,9 +20,14 @@ public class Controller {
         return contractService.addContract(contractDTO);
     }
 
-    @GetMapping("/contract/{id}")
-    public List<Contract> getContractByCustomerId(@PathVariable String id) {
-        return contractService.getContractByCustomerId(id);
+    @GetMapping("/contract/customer_id/{customer_id}")
+    public List<Contract> getContractByCustomerId(@PathVariable String customer_id) {
+        return contractService.getContractByCustomerId(customer_id);
+    }
+
+    @GetMapping("/contract/product_id/{product_id}")
+    public List<Contract> getContractByProductId(@PathVariable String product_id) {
+        return contractService.getContractByProductId(product_id);
     }
 
     @DeleteMapping("/contract/{id}")
@@ -34,6 +39,4 @@ public class Controller {
     public boolean updatePremium(@RequestBody ContractDTO contractDTO) {
         return contractService.updatePremium(contractDTO);
     }
-
-
 }
