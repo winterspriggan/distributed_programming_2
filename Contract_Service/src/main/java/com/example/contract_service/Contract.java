@@ -1,27 +1,21 @@
 package com.example.contract_service;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Getter
-@Entity
+//@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 public class Contract {
 
-    @Id
-    @GeneratedValue
     private String id;
-    @Column(name ="cusotmer_id", nullable = false)
     private String customer_id;
-    @Column(name ="product_id", nullable = false)
     private String product_id;
-    @Column(name ="premium", nullable = false)
     private int premium;
 
     public Contract(ContractDTO contractDTO) {

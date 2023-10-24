@@ -1,10 +1,7 @@
 package com.example.contract_service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,9 +15,25 @@ public class Controller {
         return contractService.getAllContracts();
     }
 
-    @PostMapping("/contrat")
+    @PostMapping("/contract")
     public Contract addContract(@RequestBody ContractDTO contractDTO) {
         return contractService.addContract(contractDTO);
     }
+
+    @GetMapping("/contract/{id}")
+    public List<Contract> getContractByCustomerId(@PathVariable String id) {
+        return contractService.getContractByCustomerId(id);
+    }
+
+    @DeleteMapping("/contract/{id}")
+    public boolean deleteContract(@PathVariable String id) {
+        return contractService.deleteContract(id);
+    }
+
+    @PostMapping("/uContract")
+    public boolean updatePremium(@RequestBody ContractDTO contractDTO) {
+        return contractService.updatePremium(contractDTO);
+    }
+
 
 }

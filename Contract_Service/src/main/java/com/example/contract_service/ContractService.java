@@ -8,5 +8,11 @@ public interface ContractService {
 
     Contract addContract(ContractDTO contractDTO);
 
+    boolean deleteContract(String id);
+
+    List<Contract> getContractByCustomerId(String id);
+
+    boolean updatePremium(ContractDTO contractDTO);
+
 
 }
