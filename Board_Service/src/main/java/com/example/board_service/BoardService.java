@@ -8,12 +8,14 @@ public interface BoardService {
 
     Board addBoard(BoardDTO boardDTO);
 
-    boolean deleteBoard(String id);
+    boolean deleteBoardById(String id);
 
     List<Board> getBoardByCustomerId(String id);
+
+    Board getBoardById(String id);
 //    List<Contract> getContractByProductId(String id);
 
-    boolean updateBoard(BoardDTO boardDTO);
+    boolean updateAnswer(AnswerDTO answerDTO);
 
 
 }

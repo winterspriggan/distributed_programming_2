@@ -21,12 +21,13 @@ public class BoardDAO extends DAO {
         return executeUpdate(sql);
     }
 
-    public boolean deleteBoard(String id) {
-        return false;
+    public boolean deleteBoardByColumn(String column, String key) {
+        String sql = "delete from "+ tableName + " where "+ column +" = \'" + key+"\';";
+        return executeUpdate(sql);
     }
 
-    public List<Board> getBoardsByCustomerId(String id) {
-        String sql = "select * from "+ tableName+" where author = \'"+ id+"\';";
+    public List<Board> getBoardsByAttribute(String id, String column) {
+        String sql = "select * from "+ tableName+" where " +  column + " = \'" +id+"\';";
         return findboards(sql);
     }
 
@@ -57,8 +58,8 @@ public class BoardDAO extends DAO {
 
 
     public boolean updateBoard(Board board) {
-        String sql = "update " + tableName + " set answer=\'" + board.getAnswer() + "\', answerer=\'" + board.getAnswerer() + "\', is_answered=" + board.getIsAnswered() +
-                " where id=\'" + board.getId() + "\';";
+        String sql = "update " + tableName + " set answer=\'" + board.getAnswer() + "\', answerer=\'" + board.getAnswerer() + "\', is_answered = " +board.getIsAnswered()+
+                " where id = \'" + board.getId() + "\';";
         return executeUpdate(sql);
     }
 }

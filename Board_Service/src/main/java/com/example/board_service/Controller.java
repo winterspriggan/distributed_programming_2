@@ -21,22 +21,22 @@ public class Controller {
     }
 
     @GetMapping("/board/customer_id/{customer_id}")
-    public List<Board> getContractByCustomerId(@PathVariable String customer_id) {
+    public List<Board> getBoardsByCustomerId(@PathVariable String customer_id) {
         return boardService.getBoardByCustomerId(customer_id);
     }
 
-//    @GetMapping("/contract/product_id/{product_id}")
-//    public List<Board> getContractByProductId(@PathVariable String product_id) {
-//        return boardService.getContractByProductId(product_id);
-//    }
-
-    @DeleteMapping("/board/{id}")
-    public boolean deleteBoard(@PathVariable String id) {
-        return boardService.deleteBoard(id);
+    @GetMapping("/board/id/{id}")
+    public Board getBoardById(@PathVariable String id) {
+        return boardService.getBoardById(id);
     }
 
-//    @PostMapping("/uBoard")
-//    public boolean updatePremium(@RequestBody BoardDTO boardDTO) {
-//        return boardService.updatePremium(boardDTO);
-//    }
+    @PutMapping("/uBoard")
+    public boolean updateAnswer(@RequestBody AnswerDTO answerDTO) {
+        return boardService.updateAnswer(answerDTO);
+    }
+
+    @DeleteMapping("/board/{id}")
+    public boolean deleteBoardByID(@PathVariable String id) {
+        return boardService.deleteBoardById(id);
+    }
 }

@@ -24,24 +24,37 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public boolean deleteBoard(String id) {
-        return boardDAO.deleteBoard(id);
+    public boolean deleteBoardById(String id) {
+        return boardDAO.deleteBoardByColumn("id", id);
     }
 
     @Override
     public List<Board> getBoardByCustomerId(String id) {
-        return boardDAO.getBoardsByCustomerId(id);
+        return boardDAO.getBoardsByAttribute(id, "author");
     }
+
+    @Override
+    public Board getBoardById(String id) { return boardDAO.getBoardsByAttribute(id, "id").get(0); }
 
 //    @Override
 //    public List<Board> getContractByProductId(String id) {
 //        return boardDAO.getContractsByProductId(id);
 //    }
 
+
+
     @Override
-    public boolean updateBoard(BoardDTO boardDTO) {
-        Board board = new Board(boardDTO);
-        return boardDAO.updateBoard(board);
+    public boolean updateAnswer(AnswerDTO answerDTO) {
+        Board temp = getBoardById(answerDTO.getId());
+        BoardDTO boardDTO = new BoardDTO();
+        boardDTO.setId(temp.getId());
+        boardDTO.setAuthor(temp.getAuthor());
+        boardDTO.setTitle(temp.getTitle());
+        boardDTO.setContent(temp.getContent());
+        boardDTO.setAnswer(answerDTO.getAnswer());
+        boardDTO.setAnswerer(answerDTO.getAnswerer());
+        boardDTO.setIsAnswered(answerDTO.getIsAnswerd());
+        return boardDAO.updateBoard(new Board(boardDTO));
     }
 
 
