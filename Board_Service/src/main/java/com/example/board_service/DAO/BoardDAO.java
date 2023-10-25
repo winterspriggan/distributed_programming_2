@@ -16,34 +16,49 @@ public class BoardDAO extends DAO {
     }
 
     public boolean addBoard(Board board) {
-        String sql = "insert into " + tableName + " values(\'" + board.getId() + "\', \'" + board.getAuthor() + "\', \'" + board.getTitle() + "\', \'" + board.getContent() + "\', \'"
-                + board.getAnswer() + "\', \'" + board.getAnswerer() + "\', " + board.getIsAnswered() + ");";
+        String sql = "insert into " + tableName + " values(\'" + board.getId() + "\', \'" + board.getAuthor() + "\', \'" + board.getTitle() + "\', \'" + board.getContent() + "\', "
+                +" null, null , 0 );";
         return executeUpdate(sql);
     }
 
+    public boolean deleteBoard(String id) {
+        return false;
+    }
+
+    public List<Board> getBoardsByCustomerId(String id) {
+        String sql = "select * from "+ tableName+" where author = \'"+ id+"\';";
+        return findboards(sql);
+    }
 
     public List<Board> findAllBoards() {
         String sql = "select * from " + tableName + ";";
+        return findboards(sql);
+    }
+
+    public List<Board> findboards(String sql) {
         if (!executeQuery(sql)) return null;
         if(!next()) return null;
         List<Board> boards = new ArrayList<>();
         do {
             BoardDTO boardDTO = new BoardDTO();
-            boardDTO.getId() = getString("id");
-            boardDTO.getAuthor() = getString("author");
-            boardDTO.getTitle() = getString("title");
-            boardDTO.getContent() = getString("content");
-            boardDTO.getAnswer() = getString("answer");
-            boardDTO.getAnswerer() = getString("answerer");
-            boardDTO.getIsAnswered() = getInt("is_answered");
+            boardDTO.setId(getString("id"));
+            boardDTO.setAuthor(getString("author"));
+            boardDTO.setTitle(getString("title"));
+            boardDTO.setContent(getString("content"));
+            boardDTO.setAnswer(getString("answer"));
+            boardDTO.setAnswerer(getString("answerer"));
+            boardDTO.setIsAnswered(getInt("is_answered"));
             boards.add(new Board(boardDTO));
         } while(next());
         return boards;
     }
 
+
+
+
     public boolean updateBoard(Board board) {
-        String sql = "update " + tableName + " set answer=\'" + board.answer + "\', answerer=\'" + board.answerer + "\', is_answered=" + board.isAnswered +
-                " where id=\'" + board.id + "\';";
+        String sql = "update " + tableName + " set answer=\'" + board.getAnswer() + "\', answerer=\'" + board.getAnswerer() + "\', is_answered=" + board.getIsAnswered() +
+                " where id=\'" + board.getId() + "\';";
         return executeUpdate(sql);
     }
 }

@@ -12,8 +12,7 @@ public class BoardServiceImpl implements BoardService {
     private final BoardDAO boardDAO = new BoardDAO();
 
     @Override
-    public List<Board> getAllContracts() {
-//        List<Contract> contracts = new ArrayList<>();
+    public List<Board> getAllBoards() {
         return boardDAO.findAllBoards();
     }
 
@@ -26,12 +25,12 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public boolean deleteBoard(String id) {
-        return boardDAO.deleteContract(id);
+        return boardDAO.deleteBoard(id);
     }
 
     @Override
     public List<Board> getBoardByCustomerId(String id) {
-        return boardDAO.getContractsByCustomerId(id);
+        return boardDAO.getBoardsByCustomerId(id);
     }
 
 //    @Override
@@ -41,8 +40,8 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public boolean updateBoard(BoardDTO boardDTO) {
-        Contract contract = new Contract(boardDTO);
-        return boardDAO.updatePremium(contract);
+        Board board = new Board(boardDTO);
+        return boardDAO.updateBoard(board);
     }
 
 

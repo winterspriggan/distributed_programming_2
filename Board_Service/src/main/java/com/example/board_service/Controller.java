@@ -20,8 +20,8 @@ public class Controller {
         return boardService.addBoard(boardDTO);
     }
 
-    @GetMapping("/contract/customer_id/{customer_id}")
-    public List<Voard> getContractByCustomerId(@PathVariable String customer_id) {
+    @GetMapping("/board/customer_id/{customer_id}")
+    public List<Board> getContractByCustomerId(@PathVariable String customer_id) {
         return boardService.getBoardByCustomerId(customer_id);
     }
 

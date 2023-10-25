@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface BoardService {
 
-    List<Board> getAllContracts();
+    List<Board> getAllBoards();
 
     Board addBoard(BoardDTO boardDTO);
 

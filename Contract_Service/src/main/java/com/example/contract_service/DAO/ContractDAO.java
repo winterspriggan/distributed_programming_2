@@ -32,27 +32,23 @@ public class ContractDAO extends DAO {
 
     public List<Contract> findAllContracts() {
         String sql = "select * from " + tableName + ";";
-        if (!executeQuery(sql)) return null;
-        if(!next()) return null;
-        List<Contract> contracts = new ArrayList<>();
-        do {
-            ContractDTO contractDTO = new ContractDTO();
-            contractDTO.setId(getString("id"));
-            contractDTO.setCustomer_id(getString("customer_id")) ;
-            contractDTO.setProduct_id(getString("product_id"));
-            contractDTO.setPremium( getInt("premium"));
-            Contract contract = new Contract(contractDTO);
-            contracts.add(contract);
-        } while (next());
-        return contracts;
+        return findBoards(sql);
     }
     public List<Contract> getContractsByCustomerId(String customerId) {
         String sql = "select * from " + tableName + " where customer_id=\'" + customerId + "\';";
+        return findBoards(sql);
+    }
+
+    public List<Contract> getContractsByProductId(String productId) {
+        String sql = "select * from " + tableName + " where product_id=\'" + productId + "\';";
+        return  findBoards(sql);
+    }
+
+    public List<Contract> findBoards(String sql) {
         if (!executeQuery(sql)) return null;
         if(!next()) return null;
         List<Contract> contracts = new ArrayList<>();
         do {
-//            Contract contract = new Contract();
             ContractDTO contractDTO = new ContractDTO();
             contractDTO.setId(getString("id"));
             contractDTO.setCustomer_id(getString("customer_id")) ;
@@ -64,22 +60,6 @@ public class ContractDAO extends DAO {
         return contracts;
     }
 
-    public List<Contract> getContractsByProductId(String productId) {
-        String sql = "select * from " + tableName + " where product_id=\'" + productId + "\';";
-        if (!executeQuery(sql)) return null;
-        if(!next()) return null;
-        List<Contract> contracts = new ArrayList<>();
-        do {
-//            Contract contract = new Contract();
-            ContractDTO contractDTO = new ContractDTO();
-            contractDTO.setId(getString("id"));
-            contractDTO.setCustomer_id(getString("customer_id")) ;
-            contractDTO.setProduct_id(getString("product_id"));
-            contractDTO.setPremium( getInt("premium"));
-            Contract contract = new Contract(contractDTO);
-            contracts.add(contract);
-        } while (next());
-        return contracts;
-    }
+
 
 }
