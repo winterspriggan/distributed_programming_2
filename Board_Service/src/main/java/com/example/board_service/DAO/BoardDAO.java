@@ -1,6 +1,7 @@
 package com.example.board_service.DAO;
 
 
+import com.example.board_service.AnswerDTO;
 import com.example.board_service.Board;
 import com.example.board_service.BoardDTO;
 
@@ -57,9 +58,9 @@ public class BoardDAO extends DAO {
 
 
 
-    public boolean updateBoard(Board board) {
-        String sql = "update " + tableName + " set answer=\'" + board.getAnswer() + "\', answerer=\'" + board.getAnswerer() + "\', is_answered = " +board.getIsAnswered()+
-                " where id = \'" + board.getId() + "\';";
+    public boolean updateBoard(AnswerDTO answerDTO) {
+        String sql = "update " + tableName + " set answer=\'" + answerDTO.getAnswer() + "\', answerer=\'" + answerDTO.getAnswerer() + "\', is_answered = " +answerDTO.getIsAnswerd()+
+                " where id = \'" + answerDTO.getId() + "\';";
         return executeUpdate(sql);
     }
 }
