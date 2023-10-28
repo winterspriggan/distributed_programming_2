@@ -20,23 +20,18 @@ public class Controller {
         return contractService.addContract(contractDTO);
     }
 
-    @GetMapping("/contract/customer_id/{customer_id}")
-    public List<Contract> getContractByCustomerId(@PathVariable String customer_id) {
-        return contractService.getContractByCustomerId(customer_id);
-    }
-
-    @GetMapping("/contract/product_id/{product_id}")
-    public List<Contract> getContractByProductId(@PathVariable String product_id) {
-        return contractService.getContractByProductId(product_id);
+    @GetMapping("/contract/{id}")
+    public Contract getContractByrId(@PathVariable String customer_id) {
+        return contractService.getContractById(customer_id);
     }
 
     @DeleteMapping("/contract/{id}")
-    public boolean deleteContract(@PathVariable String id) {
-        return contractService.deleteContract(id);
+    public void deleteContract(@PathVariable String id) {
+        contractService.deleteContract(id);
     }
 
     @PostMapping("/uContract")
-    public boolean updatePremium(@RequestBody ContractDTO contractDTO) {
+    public Contract updatePremium(@RequestBody ContractDTO contractDTO) {
         return contractService.updatePremium(contractDTO);
     }
 }

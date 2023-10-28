@@ -3,6 +3,7 @@ package com.example.claim_service;
 import lombok.Getter;
 
 @Getter
+@Entity
 public class Claim {
 
         public Claim(ClaimDTO claimDTO) {

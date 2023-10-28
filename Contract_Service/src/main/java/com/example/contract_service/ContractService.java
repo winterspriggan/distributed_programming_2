@@ -1,6 +1,7 @@
 package com.example.contract_service;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ContractService {
 
@@ -8,12 +9,10 @@ public interface ContractService {
 
     Contract addContract(ContractDTO contractDTO);
 
-    boolean deleteContract(String id);
+    void deleteContract(String id);
 
-    List<Contract> getContractByCustomerId(String id);
-    List<Contract> getContractByProductId(String id);
-
-    boolean updatePremium(ContractDTO contractDTO);
+    public Contract getContractById(String id);
+    Contract updatePremium(ContractDTO contractDTO);
 
 
 }

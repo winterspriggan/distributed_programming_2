@@ -5,43 +5,41 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class ContractServiceImpl implements ContractService{
     private final ContractDAO contractDAO = new ContractDAO();
+    private final ContractRepository contractRepository;
 
     @Override
     public List<Contract> getAllContracts() {
-//        List<Contract> contracts = new ArrayList<>();
-        return contractDAO.findAllContracts();
+        return contractRepository.findAll();
     }
 
     @Override
     public Contract addContract(ContractDTO contractDTO) {
         Contract contract = new Contract(contractDTO);
-        if(contractDAO.addContract(contract)) return contract;
-        return null;
+       return contractRepository.save(contract);
     }
 
     @Override
-    public boolean deleteContract(String id) {
-        return contractDAO.deleteContract(id);
+    public void deleteContract(String id) {
+        Contract contract = contractRepository.getContractByID(id);
+        contractRepository.delete(contract);
     }
 
     @Override
-    public List<Contract> getContractByCustomerId(String id) {
-        return contractDAO.getContractsByCustomerId(id);
+    public Contract getContractById(String id) {
+        return contractRepository.getContractByID(id);
     }
 
-    @Override
-    public List<Contract> getContractByProductId(String id) {
-        return contractDAO.getContractsByProductId(id);
-    }
 
     @Override
-    public boolean updatePremium(ContractDTO contractDTO) {
+    public Contract updatePremium(ContractDTO contractDTO) {
         Contract contract = new Contract(contractDTO);
-        return contractDAO.updatePremium(contract);
+        return contractRepository.save(contract);
     }
 
 
