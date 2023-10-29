@@ -21,8 +21,8 @@ public class Controller {
     }
 
     @GetMapping("/contract/{id}")
-    public Contract getContractByrId(@PathVariable String customer_id) {
-        return contractService.getContractById(customer_id);
+    public Contract getContractByrId(@PathVariable String id) {
+        return contractService.getContractById(id);
     }
 
     @DeleteMapping("/contract/{id}")
