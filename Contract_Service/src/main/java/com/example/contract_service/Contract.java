@@ -11,9 +11,11 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "contract")
 public class Contract {
     @Id
-    @GeneratedValue
+//    @GeneratedValue
+    @Column(name = "id" , nullable = false)
     private String id;
     @Column(name = "customer_id", nullable = false)
     private String customer_id;
