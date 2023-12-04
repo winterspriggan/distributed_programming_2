@@ -1,6 +1,6 @@
 package insurance_system_employee_service.jpa.employee;
 
-import insurance_system_employee_service.vo.Department;
+import insurance_system_employee_service.service.vo.Department;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

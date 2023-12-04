@@ -4,7 +4,7 @@ package insurance_system_employee_service.service;
 import insurance_system_employee_service.dto.BoardDTO;
 import insurance_system_employee_service.jpa.board.BoardEntity;
 import insurance_system_employee_service.jpa.board.BoardRepository;
-import insurance_system_employee_service.vo.BoardVO;
+import insurance_system_employee_service.service.vo.BoardVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

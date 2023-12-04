@@ -1,9 +1,8 @@
 package insurance_system_employee_service.service;
 
 import insurance_system_employee_service.jpa.employee.EmployeeRepository;
-import insurance_system_employee_service.dto.ClaimDTO;
 import insurance_system_employee_service.jpa.employee.EmployeeEntity;
-import insurance_system_employee_service.vo.EmployeeVO;
+import insurance_system_employee_service.service.vo.EmployeeVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

@@ -1,0 +1,22 @@
+import insurance_system_employee_service.service.vo.ClaimVO
+import insurance_system_employee_service.service.vo.Status
+
+
+rule "보상 거절"
+when
+    ClaimVO(compensation == 0)
+    $claim: ClaimVO()
+then
+    $claim.setStatus(Status.REJECTED.toString());
+    update($claim);
+end
+
+rule "보상 수락"
+when
+    ClaimVO(compensation != 0)
+    $claim: ClaimVO()
+then
+    $claim.setStatus(Status.ACCEPTED.toString());
+    update($claim);
+end
+

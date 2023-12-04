@@ -1,6 +1,6 @@
 package insurance_system_employee_service.jpa.claim;
 
-import insurance_system_employee_service.vo.Status;
+import insurance_system_employee_service.service.vo.Status;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

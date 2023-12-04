@@ -3,8 +3,7 @@ package insurance_system_employee_service.service;
 
 import insurance_system_employee_service.jpa.product.ProductEntity;
 import insurance_system_employee_service.jpa.product.ProductRepository;
-import insurance_system_employee_service.service.exception.SameNameException;
-import insurance_system_employee_service.vo.ProductVO;
+import insurance_system_employee_service.service.vo.ProductVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

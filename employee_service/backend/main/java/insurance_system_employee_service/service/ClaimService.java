@@ -2,29 +2,28 @@ package insurance_system_employee_service.service;
 
 import insurance_system_employee_service.jpa.claim.ClaimEntity;
 import insurance_system_employee_service.jpa.claim.ClaimRepository;
-import insurance_system_employee_service.jpa.employee.EmployeeEntity;
-import insurance_system_employee_service.jpa.employee.EmployeeRepository;
-import insurance_system_employee_service.vo.ClaimVO;
-import insurance_system_employee_service.vo.Department;
-import insurance_system_employee_service.vo.EmployeeVO;
-import insurance_system_employee_service.vo.Status;
+import insurance_system_employee_service.service.vo.ClaimVO;
+import insurance_system_employee_service.service.vo.EmployeeVO;
+import insurance_system_employee_service.service.vo.Status;
 import lombok.RequiredArgsConstructor;
+import org.kie.api.runtime.KieContainer;
+import org.kie.api.runtime.KieSession;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 public class ClaimService {
     private final ClaimRepository claimRepository;
+    private final KieContainer kieContainer;
 
     public List<ClaimVO> getManagingClaims(EmployeeVO vo) {
         List<ClaimVO> claimVOS = new ArrayList<>();
         List<ClaimEntity> claimEntities = claimRepository.getClaimByEmployeeId(vo.getId());;
         for(ClaimEntity claim : claimEntities) {
+            if(claim.getStatus().equals(Status.REPORTING) || claim.getStatus().equals(Status.REVIEWING))
             claimVOS.add(entityToVO(claim));
         }
         return claimVOS;
@@ -33,9 +32,8 @@ public class ClaimService {
     public boolean submitReport(ClaimVO claimVO) {
         ClaimEntity claimEntity = claimRepository.getClaimsById(claimVO.getId());
         ClaimVO claim = entityToVO(claimEntity);
-        if(claimVO.getCompensation() != 0) claim.setStatus(Status.ACCEPTED.toString());
-        else claim.setStatus(Status.REJECTED.toString());
         claim.setCompensation(claimVO.getCompensation());
+        excuteRules(claim);
         claim.setReport(claimVO.getReport());
         claimRepository.save(vOToEntity(claim));
         return true;
@@ -66,6 +64,13 @@ public class ClaimService {
             sumCompensation += claim.getCompensation();
         }
         return (float) sumCompensation/clalims.size();
+    }
+
+    public void excuteRules(ClaimVO vo) {
+        KieSession kieSession = kieContainer.newKieSession();
+        kieSession.insert(vo);
+        kieSession.fireAllRules();
+        kieSession.dispose();
     }
 
 

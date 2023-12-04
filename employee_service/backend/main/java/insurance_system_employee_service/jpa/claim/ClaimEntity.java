@@ -1,5 +1,5 @@
 package insurance_system_employee_service.jpa.claim;
-import insurance_system_employee_service.vo.Status;
+import insurance_system_employee_service.service.vo.Status;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

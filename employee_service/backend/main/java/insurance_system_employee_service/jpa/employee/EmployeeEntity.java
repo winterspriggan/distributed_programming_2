@@ -1,8 +1,6 @@
 package insurance_system_employee_service.jpa.employee;
 
-import insurance_system_employee_service.dto.EmployeeDTO;
-import insurance_system_employee_service.vo.Department;
-import insurance_system_employee_service.vo.EmployeeVO;
+import insurance_system_employee_service.service.vo.Department;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;

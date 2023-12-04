@@ -2,8 +2,7 @@ package insurance_system_employee_service;
 
 import insurance_system_employee_service.dto.*;
 import insurance_system_employee_service.service.*;
-import insurance_system_employee_service.service.exception.SameNameException;
-import insurance_system_employee_service.vo.*;
+import insurance_system_employee_service.service.vo.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
