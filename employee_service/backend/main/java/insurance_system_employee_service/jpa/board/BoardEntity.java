@@ -44,6 +44,7 @@ public class BoardEntity  implements Serializable {
         this.answerer = answerer;
         this.is_answered = is_answered;
     }
-
-
+    public void setIs_answered(int is_answered) {
+        this.is_answered = is_answered;
+    }
 }

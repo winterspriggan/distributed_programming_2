@@ -4,6 +4,7 @@ package insurance_system_employee_service.service;
 import insurance_system_employee_service.dto.BoardDTO;
 import insurance_system_employee_service.jpa.board.BoardEntity;
 import insurance_system_employee_service.jpa.board.BoardRepository;
+import insurance_system_employee_service.jpa.product.ProductEntity;
 import insurance_system_employee_service.service.vo.BoardVO;
 import insurance_system_employee_service.service.vo.ClaimVO;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardService {
     private final BoardRepository boardRepository;
+    private final KieContainer kieContainer;
 
     public List<BoardDTO> getAllBoards() {
         List<BoardDTO> boards = new ArrayList<>();
@@ -45,10 +47,17 @@ public class BoardService {
                 .content(temp.getContent())
                 .answer(vo.getAnswer())
                 .answerer(vo.getAnswerer())
-                .is_answered(vo.getIs_answered())
                 .build();
+        excuteRules(board);
         boardRepository.save(board);
         return vo;
+    }
+
+    public void excuteRules(BoardEntity board) {
+        KieSession kieSession = kieContainer.newKieSession();
+        kieSession.insert(board);
+        kieSession.fireAllRules();
+        kieSession.dispose();
     }
 
 }

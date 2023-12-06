@@ -12,7 +12,6 @@ import lombok.Setter;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
 @Table(name = "product")
 public class ProductEntity {
@@ -57,6 +56,10 @@ public class ProductEntity {
         this.femaleRate = femaleRate;
         this.occupationHazardRate = occupationHazardRate;
         this.smokingRate = smokingRate;
+        this.released = released;
+    }
+
+    public void setReleased(int released) {
         this.released = released;
     }
 }
