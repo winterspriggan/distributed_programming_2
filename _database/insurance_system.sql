@@ -78,6 +78,13 @@ create table if not exists board
     foreign key (author) references customer (id)
 );
 
+CREATE TABLE memory_metric (
+    id varchar(60) PRIMARY KEY,
+    used_memory DOUBLE,
+    timestamp TIMESTAMP
+);
+
+
 #########################################################
 ### drop tables
 #########################################################
