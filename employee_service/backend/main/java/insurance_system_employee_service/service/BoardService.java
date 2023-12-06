@@ -5,7 +5,10 @@ import insurance_system_employee_service.dto.BoardDTO;
 import insurance_system_employee_service.jpa.board.BoardEntity;
 import insurance_system_employee_service.jpa.board.BoardRepository;
 import insurance_system_employee_service.service.vo.BoardVO;
+import insurance_system_employee_service.service.vo.ClaimVO;
 import lombok.RequiredArgsConstructor;
+import org.kie.api.runtime.KieContainer;
+import org.kie.api.runtime.KieSession;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardService {
     private final BoardRepository boardRepository;
+
     public List<BoardDTO> getAllBoards() {
         List<BoardDTO> boards = new ArrayList<>();
         List<BoardEntity> boardEntities = boardRepository.findAll();
@@ -46,4 +50,5 @@ public class BoardService {
         boardRepository.save(board);
         return vo;
     }
+
 }

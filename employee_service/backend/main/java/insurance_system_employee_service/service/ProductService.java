@@ -3,8 +3,11 @@ package insurance_system_employee_service.service;
 
 import insurance_system_employee_service.jpa.product.ProductEntity;
 import insurance_system_employee_service.jpa.product.ProductRepository;
+import insurance_system_employee_service.service.vo.ClaimVO;
 import insurance_system_employee_service.service.vo.ProductVO;
 import lombok.RequiredArgsConstructor;
+import org.kie.api.runtime.KieContainer;
+import org.kie.api.runtime.KieSession;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
-
+    private final KieContainer kieContainer;
 
 
     public List<ProductVO> getAllProduct() {
@@ -37,15 +40,17 @@ public class ProductService {
     }
 
     public void underwrite(ProductVO vo) {
-        ProductEntity temp = productRepository.getProductByName(vo.getName());
+        ProductEntity temp = productRepository.getProductById(vo.getId());
          ProductEntity product = ProductEntity.builder()
                  .id(temp.getId())
-                .occupationHazardRate(temp.getOccupationHazardRate())
-                .seniorRate(temp.getSeniorRate())
-                .femaleRate(temp.getFemaleRate())
-                .maleRate(temp.getMaleRate())
-                .released(1)
+                 .name(temp.getName())
+                 .premium(temp.getPremium())
+                .occupationHazardRate(vo.getOccupationHazardRate())
+                .seniorRate(vo.getSeniorRate())
+                .femaleRate(vo.getFemaleRate())
+                .maleRate(vo.getMaleRate())
                 .build();
+         excuteRules(product);
         productRepository.save(product);
     }
 
@@ -67,5 +72,12 @@ public class ProductService {
         vo.setId(product.getId());
         productRepository.save(product);
         return vo;
+    }
+
+    public void excuteRules(ProductEntity product) {
+        KieSession kieSession = kieContainer.newKieSession();
+        kieSession.insert(product);
+        kieSession.fireAllRules();
+        kieSession.dispose();
     }
 }

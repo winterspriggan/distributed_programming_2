@@ -3,9 +3,11 @@ import insurance_system_employee_service.service.vo.Status;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @Table(name="claim")
 public class ClaimEntity {

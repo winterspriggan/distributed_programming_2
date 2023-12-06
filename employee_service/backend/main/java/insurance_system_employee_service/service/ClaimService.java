@@ -66,9 +66,9 @@ public class ClaimService {
         return (float) sumCompensation/clalims.size();
     }
 
-    public void excuteRules(ClaimVO vo) {
+    public void excuteRules(ClaimVO claim) {
         KieSession kieSession = kieContainer.newKieSession();
-        kieSession.insert(vo);
+        kieSession.insert(claim);
         kieSession.fireAllRules();
         kieSession.dispose();
     }
