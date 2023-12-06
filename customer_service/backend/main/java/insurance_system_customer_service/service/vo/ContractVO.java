@@ -1,7 +1,9 @@
 package insurance_system_customer_service.service.vo;
 
 import lombok.Getter;
+import lombok.Setter;
 
+@Setter
 @Getter
 public class ContractVO {
 

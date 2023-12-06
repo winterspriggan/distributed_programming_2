@@ -5,7 +5,10 @@ import insurance_system_customer_service.jpa.claim.ClaimRepository;
 import insurance_system_customer_service.jpa.employee.EmployeeEntity;
 import insurance_system_customer_service.jpa.employee.EmployeeRepository;
 import insurance_system_customer_service.service.vo.ClaimVO;
+import insurance_system_customer_service.service.vo.EmployeeVO;
 import lombok.RequiredArgsConstructor;
+import org.kie.api.runtime.KieContainer;
+import org.kie.api.runtime.KieSession;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -17,6 +20,7 @@ public class ClaimService {
 
     private final EmployeeRepository employeeRepository;
     private final ClaimRepository claimRepository;
+    private final KieContainer kieContainer;
 
     public boolean createClaim(ClaimVO vo) {
         List<EmployeeEntity> investigators = employeeRepository.getEmployeesByDepartment(EmployeeEntity.Department.INVESTIGATING);
@@ -30,8 +34,12 @@ public class ClaimService {
             investigatingCount.replace(reportingClaim.getInvestigator(), investigatingCount.get(reportingClaim.getInvestigator()) + 1);
             reviewingCount.replace(reportingClaim.getReviewer(), reviewingCount.get(reportingClaim.getReviewer()) + 1);
         }
-        String investigator = assignEmployee(investigators, investigatingCount);
-        String reviewer = assignEmployee(reviewers, reviewingCount);
+
+        EmployeeVO employeeVo = new EmployeeVO(null);
+        excuteRules(investigators, investigatingCount, employeeVo);
+        String investigator = employeeVo.getEmployee();
+        excuteRules(reviewers, reviewingCount, employeeVo);
+        String reviewer = employeeVo.getEmployee();
 
         ClaimEntity claimEntity = ClaimEntity.builder()
                 .id(UUID.randomUUID().toString())
@@ -49,15 +57,12 @@ public class ClaimService {
         return false;
     }
 
-    private String assignEmployee(List<EmployeeEntity> departments, Map<String, Integer> departmentCounting) {
-        String employee = departments.get(0).getId();
-        int min = Integer.MAX_VALUE;
-        for (String employeeId : departmentCounting.keySet()) {
-            if (departmentCounting.get(employeeId) < min) {
-                employee = employeeId;
-                min = departmentCounting.get(employeeId);
-            }
-        }
-        return employee;
+    public void excuteRules(List<EmployeeEntity> departments, Map<String, Integer> departmentCounting, EmployeeVO vo){
+        KieSession kieSession = kieContainer.newKieSession();
+        kieSession.insert(departments);
+        kieSession.insert(departmentCounting);
+        kieSession.insert(vo);
+        kieSession.fireAllRules();
+        kieSession.dispose();
     }
 }
