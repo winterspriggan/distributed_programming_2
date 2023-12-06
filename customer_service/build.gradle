@@ -36,6 +36,8 @@ dependencies {
     implementation "org.drools:drools-compiler:${droolsVersion}"
     implementation "org.drools:drools-templates:${droolsVersion}"
 
+    implementation 'javax.inject:javax.inject:1'
+
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.mysql:mysql-connector-j'
     annotationProcessor 'org.projectlombok:lombok'
