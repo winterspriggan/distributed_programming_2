@@ -18,6 +18,7 @@ export default function CreateClaim({customer}) {
         axios.get(ENDPOINT_GET_CONTRACTS, {params: {id: customer.id}})
             .then(response => {
                 setContracts(response.data);
+                setSelectedContract(response.data[0].id);
             })
             .catch(e => {
                 swal({
