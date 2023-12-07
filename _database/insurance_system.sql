@@ -78,9 +78,12 @@ create table if not exists board
     foreign key (author) references customer (id)
 );
 
-CREATE TABLE memory_metric (
+CREATE TABLE customer_server_metric (
     id varchar(60) PRIMARY KEY,
+    cpu_usage DOUBLE,
     used_memory DOUBLE,
+    http_request_count DOUBLE,
+    uptime DOUBLE,
     timestamp TIMESTAMP
 );
 
