@@ -2,7 +2,10 @@ package insurance_system_employee_service.service;
 
 import insurance_system_employee_service.jpa.claim.ClaimEntity;
 import insurance_system_employee_service.jpa.claim.ClaimRepository;
+import insurance_system_employee_service.jpa.employee.EmployeeEntity;
+import insurance_system_employee_service.jpa.employee.EmployeeRepository;
 import insurance_system_employee_service.service.vo.ClaimVO;
+import insurance_system_employee_service.service.vo.Department;
 import insurance_system_employee_service.service.vo.EmployeeVO;
 import insurance_system_employee_service.service.vo.Status;
 import lombok.RequiredArgsConstructor;
@@ -17,15 +20,28 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ClaimService {
     private final ClaimRepository claimRepository;
+    private final EmployeeRepository employeeRepository;
     private final KieContainer kieContainer;
 
     public List<ClaimVO> getManagingClaims(EmployeeVO vo) {
+        EmployeeEntity employee = employeeRepository.getEmployeeById(vo.getId());
         List<ClaimVO> claimVOS = new ArrayList<>();
-        List<ClaimEntity> claimEntities = claimRepository.getClaimByEmployeeId(vo.getId());;
-        for(ClaimEntity claim : claimEntities) {
-            if(claim.getStatus().equals(Status.REPORTING) || claim.getStatus().equals(Status.REVIEWING))
-            claimVOS.add(entityToVO(claim));
+        List<ClaimEntity> claimEntities;
+        if(employee.getDepartment().equals(Department.SUPPORTING)) {
+            claimEntities = claimRepository.getClaimsByReviewerId(vo.getId());
+            for(ClaimEntity claim : claimEntities) {
+                if(claim.getStatus().equals(Status.REVIEWING))
+                    claimVOS.add(entityToVO(claim));
+            }
         }
+        else {
+            claimEntities = claimRepository.getClaimsByInvestigatorId(vo.getId());
+            for(ClaimEntity claim : claimEntities) {
+                if(claim.getStatus().equals(Status.REPORTING))
+                    claimVOS.add(entityToVO(claim));
+            }
+        }
+
         return claimVOS;
     }
 
@@ -49,7 +65,7 @@ public class ClaimService {
     }
 
     public boolean payCompensation(ClaimVO claimVO) {
-        if(!claimVO.getStatus().toString().equals( Status.ACCEPTED.toString())) return false;
+        if(!claimVO.getStatus().equals( Status.ACCEPTED.toString())) return false;
         ClaimEntity claimEntity = claimRepository.getClaimsById(claimVO.getId());
         ClaimVO claim = entityToVO(claimEntity);
         claim.setStatus("PAID");

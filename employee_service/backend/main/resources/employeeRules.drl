@@ -17,7 +17,7 @@ when
     ClaimVO(compensation != 0)
     $claim: ClaimVO()
 then
-    $claim.setStatus(Status.ACCEPTED.toString());
+    $claim.setStatus(Status.REVIEWING.toString());
     update($claim);
 end
 

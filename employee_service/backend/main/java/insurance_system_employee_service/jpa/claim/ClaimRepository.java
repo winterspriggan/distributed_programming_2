@@ -8,8 +8,11 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ClaimRepository extends JpaRepository<ClaimEntity , String> {
+    @Query("SELECT c FROM ClaimEntity c WHERE c.reviewer = :reviewer")
+    List<ClaimEntity> getClaimsByReviewerId(@Param("reviewer") String reviewer);
+
     @Query("SELECT c FROM ClaimEntity c WHERE c.investigator = :investigator")
-    List<ClaimEntity> getClaimByEmployeeId(@Param("investigator") String investigator);
+    List<ClaimEntity> getClaimsByInvestigatorId(@Param("investigator") String investigator);
 
     @Query("SELECT c FROM ClaimEntity c WHERE c.status = :status")
     List<ClaimEntity> getClaimsByStatus(@Param("status") Status status);

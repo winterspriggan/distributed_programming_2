@@ -126,6 +126,7 @@ public class EmployeeController {
     public List<ClaimDTO> getAcceptedClaims() {
         List<ClaimDTO> claimDTOS = new ArrayList<>();
         List<ClaimVO> claimVOS = claimService.getClaimsByStatus(Status.ACCEPTED);
+        System.out.println(claimVOS.size());
         for (ClaimVO claimVO : claimVOS) {
             claimDTOS.add(new ClaimDTO(claimVO.getId()
                     , claimVO.getCompensation()
