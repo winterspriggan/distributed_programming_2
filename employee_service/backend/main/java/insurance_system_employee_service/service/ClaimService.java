@@ -65,8 +65,8 @@ public class ClaimService {
     }
 
     public boolean payCompensation(ClaimVO claimVO) {
-        if(!claimVO.getStatus().equals( Status.ACCEPTED.toString())) return false;
         ClaimEntity claimEntity = claimRepository.getClaimsById(claimVO.getId());
+        if(!claimEntity.getStatus().equals( Status.ACCEPTED)) return false;
         ClaimVO claim = entityToVO(claimEntity);
         claim.setStatus("PAID");
         claimRepository.save(vOToEntity(claim));

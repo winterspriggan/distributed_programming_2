@@ -36,8 +36,7 @@ public class ClaimVO  {
         this.compensation = compensation;
         this.report = report;
     }
-    public ClaimVO(String id, String status) {
+    public ClaimVO(String id) {
         this.id = id;
-        this.status = status;
     }
 }

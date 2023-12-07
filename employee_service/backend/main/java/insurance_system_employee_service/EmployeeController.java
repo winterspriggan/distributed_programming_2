@@ -144,7 +144,7 @@ public class EmployeeController {
     @PostMapping("claim/pay_compensation")
     public boolean payCompensation(ClaimDTO dto) {
         System.out.println(dto);
-        ClaimVO claimVO = new ClaimVO(dto.getId(), dto.getStatus());
+        ClaimVO claimVO = new ClaimVO(dto.getId());
         return claimService.payCompensation(claimVO);
     }
 
