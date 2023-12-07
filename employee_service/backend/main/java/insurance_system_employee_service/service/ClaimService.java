@@ -55,6 +55,13 @@ public class ClaimService {
         return true;
     }
 
+    public boolean reviewClaim(ClaimVO claimVO) {
+        ClaimEntity claimEntity = claimRepository.getClaimsById(claimVO.getId());
+        claimEntity.setStatus(Status.valueOf(claimVO.getStatus()));
+        claimRepository.save(claimEntity);
+        return true;
+    }
+
     public List<ClaimVO> getClaimsByStatus(Status status) {
         List<ClaimVO> claimVOS = new ArrayList<>();
         List<ClaimEntity> claimEntities = claimRepository.getClaimsByStatus(status);;
@@ -118,7 +125,5 @@ public class ClaimService {
         return claimEntity;
     }
 
-    public boolean reviewClaim(ClaimVO claimVO) {
-        return false;
-    }
+
 }
