@@ -11,8 +11,7 @@ export default function ViewBoard({customer}) {
     const [writeMode, setWriteMode] = useState(false);
     const [boards, setBoards] = useState(null);
 
-
-    useEffect(() => {
+    function updateBoards() {
         axios.get(ENDPOINT_GET_BOARDS)
             .then(response => {
                 setBoards(response.data);
@@ -22,11 +21,15 @@ export default function ViewBoard({customer}) {
                     title: '시스템 오류', text: '잠시후 다시 시도해주세요. 불편을 드려 죄송합니다.', icon: 'error', button: '확인',
                 });
             });
+    }
+
+    useEffect(() => {
+        updateBoards();
     }, []);
 
 
     if (!writeMode) return <BoardTable boards={boards} setWriteMode={setWriteMode}/>;
-    return <WriteBoard customer={customer} setWriteMode={setWriteMode}/>
+    return <WriteBoard customer={customer} setWriteMode={setWriteMode} updateBoards={updateBoards}/>
 }
 
 function BoardTable({boards, setWriteMode}) {
@@ -61,7 +64,7 @@ function BoardTable({boards, setWriteMode}) {
     );
 }
 
-function WriteBoard({customer, setWriteMode}) {
+function WriteBoard({customer, setWriteMode, updateBoards}) {
 
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
@@ -80,6 +83,7 @@ function WriteBoard({customer, setWriteMode}) {
                     icon: 'success',
                     button: '확인',
                 });
+                updateBoards();
             })
             .catch(error => {
                 swal({

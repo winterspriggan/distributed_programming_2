@@ -44,8 +44,10 @@ public class CustomerController {
         List<ContractVO> contractVOs = contractService.getContracts(dto.id);
         List<ContractDTO> contractDTOs = new ArrayList<>();
         if (contractVOs != null) {
-            for (ContractVO vo : contractVOs)
-                contractDTOs.add(new ContractDTO(vo.id, vo.customer_id, vo.product_id, vo.premium));
+            for (ContractVO vo : contractVOs) {
+                String productName = productService.getProductById(vo.product_id).name;
+                contractDTOs.add(new ContractDTO(vo.id, vo.customer_id, vo.product_id, productName, vo.premium));
+            }
         }
         return contractDTOs;
     }

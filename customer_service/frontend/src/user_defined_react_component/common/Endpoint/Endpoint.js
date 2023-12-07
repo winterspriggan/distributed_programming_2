@@ -7,7 +7,7 @@ export const ENDPOINT_POST_CLAIM = HOST + GATEWAY_PORT + SERVICE_NAME + '/claim/
 export const ENDPOINT_GET_PRODUCTS = HOST + GATEWAY_PORT + SERVICE_NAME + '/product/get_all';
 export const ENDPOINT_POST_CONTRACT = HOST + GATEWAY_PORT + SERVICE_NAME + '/contract/create';
 export const ENDPOINT_GET_BOARDS = HOST + GATEWAY_PORT + SERVICE_NAME + '/board/get_all';
-export const ENDPOINT_POST_BOARD = HOST + GATEWAY_PORT + SERVICE_NAME + 'board/create';
+export const ENDPOINT_POST_BOARD = HOST + GATEWAY_PORT + SERVICE_NAME + '/board/create';
 
 // export const ENDPOINT_GET_LOGIN = 'http://localhost:40021/our_insurance/customer/login';
 // export const ENDPOINT_GET_CONTRACTS = 'http://localhost:40021/our_insurance/contracts';
