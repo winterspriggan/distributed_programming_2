@@ -39,4 +39,9 @@ public class ClaimVO  {
     public ClaimVO(String id) {
         this.id = id;
     }
+
+    public ClaimVO(String id, String status) {
+        this.id = id;
+        this.status = status;
+    }
 }

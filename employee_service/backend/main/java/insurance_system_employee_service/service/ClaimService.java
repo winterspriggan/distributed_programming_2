@@ -117,4 +117,8 @@ public class ClaimService {
         );
         return claimEntity;
     }
+
+    public boolean reviewClaim(ClaimVO claimVO) {
+        return false;
+    }
 }
