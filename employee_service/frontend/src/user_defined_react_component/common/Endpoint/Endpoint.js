@@ -11,6 +11,7 @@ export const ENDPOINT_GET_BOARDS = ORIGIN + '/board/get_all';
 export const ENDPOINT_POST_ANSWER_BOARD = ORIGIN + '/board/answer';
 export const ENDPOINT_GET_MANAGING_CLAIMS = ORIGIN + '/claim/get_all_by_employee_id';
 export const ENDPOINT_POST_REPORT = ORIGIN + '/claim/submit_report';
+export const ENDPOINT_POST_REVIEW_CLAIM = ORIGIN + '/claim/review_claim';
 export const ENDPOINT_GET_ACCEPTED_CLAIMS = ORIGIN + '/claim/get_accepted';
 export const ENDPOINT_POST_PAY_COMPENSATION = ORIGIN + '/claim/pay_compensation';
 export const ENDPOINT_GET_CUSTOMER_STATISTICS = ORIGIN + '/customer/get_statistics';

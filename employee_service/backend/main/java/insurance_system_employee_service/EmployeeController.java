@@ -57,7 +57,6 @@ public class EmployeeController {
     }
 
 
-
     @PostMapping("product/underwrite")
     public boolean underwrite(ProductDTO dto) {
         System.out.println(dto);
@@ -120,6 +119,12 @@ public class EmployeeController {
                 , dto.getReport());
         claimService.submitReport(claimVO);
         return true;
+    }
+
+    @PostMapping("claim/review_claim")
+    public boolean reviewClaim(ClaimDTO dto) {
+        ClaimVO claimVO = new ClaimVO(dto.getId(), dto.getStatus());
+        return claimService.reviewClaim(claimVO);
     }
 
     @GetMapping("claim/get_accepted")

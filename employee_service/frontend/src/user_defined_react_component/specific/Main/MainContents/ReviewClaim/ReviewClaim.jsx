@@ -3,57 +3,44 @@ import axios from "axios";
 import './ReviewClaim.css'
 import {
     ENDPOINT_GET_MANAGING_CLAIMS,
-    ENDPOINT_POST_ANSWER_BOARD, ENDPOINT_POST_REPORT
+    ENDPOINT_POST_ANSWER_BOARD, ENDPOINT_POST_REPORT, ENDPOINT_POST_REVIEW_CLAIM
 } from "../../../../common/Endpoint/Endpoint";
 import swal from "sweetalert";
 import Button from "../../../../common/Button/Button";
 
 function ClaimRecord({claim, employee}) {
     function reviewClaim(result) {
-        swal({
-            content: "input",
-        }).then(report => {
-            if (report === '') {
+        axios.post(ENDPOINT_POST_REVIEW_CLAIM, null, {
+            params: {
+                id: claim.id,
+                status: result
+            }
+        })
+            .then(response => {
+                if (response.data === true) {
+                    swal({
+                        title: '보상금 청구 심사 완료',
+                        text: '보상금 청구 심사가 완료되었습니다.',
+                        icon: 'success',
+                        button: '확인',
+                    });
+                } else {
+                    swal({
+                        title: '보상금 청구 심사 실패',
+                        text: '잠시후 다시 시도해주세요.',
+                        icon: 'error',
+                        button: '확인',
+                    });
+                }
+            })
+            .catch(error => {
                 swal({
-                    title: '조사 보고서 제출 실패',
-                    text: '입력이 비어있습니다.',
+                    title: '시스템 오류',
+                    text: '잠시후 다시 시도해주세요. 불편을 드려 죄송합니다.',
                     icon: 'error',
                     button: '확인',
                 });
-            } else {
-                axios.post(ENDPOINT_POST_REPORT, null, {
-                    params: {
-                        id: claim.id,
-                        status: result
-                    }
-                })
-                    .then(response => {
-                        if (response.data === true) {
-                            swal({
-                                title: '보상금 청구 심사 완료',
-                                text: '보상금 청구 심사가 완료되었습니다.',
-                                icon: 'success',
-                                button: '확인',
-                            });
-                        } else {
-                            swal({
-                                title: '보상금 청구 심사 실패',
-                                text: '잠시후 다시 시도해주세요.',
-                                icon: 'error',
-                                button: '확인',
-                            });
-                        }
-                    })
-                    .catch(error => {
-                        swal({
-                            title: '시스템 오류',
-                            text: '잠시후 다시 시도해주세요. 불편을 드려 죄송합니다.',
-                            icon: 'error',
-                            button: '확인',
-                        });
-                    });
-            }
-        });
+            });
     }
 
     return (
