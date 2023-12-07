@@ -18,7 +18,7 @@ export default function CreateClaim({customer}) {
         axios.get(ENDPOINT_GET_CONTRACTS, {params: {id: customer.id}})
             .then(response => {
                 setContracts(response.data);
-                setSelectedContract(response.data[0].id);
+                setSelectedContract(response.data[0].product_name);
             })
             .catch(e => {
                 swal({
@@ -31,7 +31,9 @@ export default function CreateClaim({customer}) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const data = {
-            contract_id: selectedContract,
+            contract_id: contracts.find(function (contract) {
+                return contract.product_name = selectedContract;
+            }).id,
             description: description
         }
         await axios.post(ENDPOINT_POST_CLAIM, data)
@@ -56,8 +58,8 @@ export default function CreateClaim({customer}) {
             <div className={'create_claim'}>
                 <h2>보상금 청구</h2>
                 <form onSubmit={handleSubmit}>
-                    <SelectInput text={'계약아이디'} values={contracts.map(function (contract) {
-                        return contract.id
+                    <SelectInput text={'상품이름'} values={contracts.map(function (contract) {
+                        return contract.product_name;
                     })} onChange={(e) => setSelectedContract(e.target.value)}/>
                     <TextInput text={'내용'} value={description} onChange={(e) => setDescription(e.target.value)}/>
                     <Button text={'완료'} type="submit"/>

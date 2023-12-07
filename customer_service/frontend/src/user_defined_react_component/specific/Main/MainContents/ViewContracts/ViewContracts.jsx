@@ -26,11 +26,11 @@ export default function ViewContracts({customer}) {
             <h2>가입 상품 조회</h2>
             <table>
                 <tr>
-                    <th>상품 아이디</th>
+                    <th>상품 이름</th>
                     <th>보험료</th>
                 </tr>
                 {contracts.map(contract => <tr>
-                    <td>{contract.product_id}</td>
+                    <td>{contract.product_name}</td>
                     <td>{contract.premium}원</td>
                 </tr>)}
             </table>
