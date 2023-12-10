@@ -46,6 +46,7 @@ public class ClaimService {
     }
 
     public boolean submitReport(ClaimVO claimVO) {
+        if(claimVO.getReport().trim().isEmpty()) return false;
         ClaimEntity claimEntity = claimRepository.getClaimsById(claimVO.getId());
         ClaimVO claim = entityToVO(claimEntity);
         claim.setCompensation(claimVO.getCompensation());

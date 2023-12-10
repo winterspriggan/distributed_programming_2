@@ -3,6 +3,7 @@ package insurance_system_employee_service.service;
 
 import insurance_system_employee_service.jpa.product.ProductEntity;
 import insurance_system_employee_service.jpa.product.ProductRepository;
+import insurance_system_employee_service.service.exception.SameNameException;
 import insurance_system_employee_service.service.vo.ClaimVO;
 import insurance_system_employee_service.service.vo.ProductVO;
 import lombok.RequiredArgsConstructor;
@@ -54,14 +55,15 @@ public class ProductService {
         productRepository.save(product);
     }
 
-    public ProductVO developProduct(ProductVO vo) {
+    public ProductVO developProduct(ProductVO vo) throws SameNameException {
+        if(vo.getName().trim().length() == 0) throw new NullPointerException(); //상품 이름이 빈 칸일 떄
         List<ProductVO> temp =getAllProduct();
-        for(ProductVO product : temp)  if(vo.getName().equals(product.getName())) return null;
+        for(ProductVO product : temp)  if(vo.getName().trim().equals(product.getName().trim())) throw new SameNameException(vo.getName(), product.getId()); // 같은 이름의 상품이 존재할떄
         String pID = temp.get(temp.size()-1).getId();
         pID = pID.substring(1).trim();
         ProductEntity product = ProductEntity.builder()
                 .id("P"+(Integer.parseInt(pID)+1))
-                .name(vo.getName())
+                .name(vo.getName().trim())
                 .premium(vo.getPremium())
                 .occupationHazardRate(-1)
                 .seniorRate(-1)

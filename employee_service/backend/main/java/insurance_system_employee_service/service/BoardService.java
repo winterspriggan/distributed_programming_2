@@ -39,6 +39,7 @@ public class BoardService {
     }
 
     public BoardVO createAnswer(BoardVO vo) {
+        if(vo.getAnswer().trim().isEmpty()) throw new NullPointerException();
         BoardEntity temp = boardRepository.getBoardByID(vo.getId());
         BoardEntity board = BoardEntity.builder()
                 .id(temp.getId())
