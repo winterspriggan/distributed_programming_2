@@ -2,6 +2,7 @@ package insurance_system_employee_service;
 
 import insurance_system_employee_service.dto.*;
 import insurance_system_employee_service.service.*;
+import insurance_system_employee_service.service.exception.SameNameException;
 import insurance_system_employee_service.service.vo.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +31,7 @@ public class EmployeeController {
     }
 
     @PostMapping("product/create")
-    public ProductDTO createProduct(ProductDTO dto) {
+    public ProductDTO createProduct(ProductDTO dto) throws SameNameException {
         System.out.println(dto);
         productService.developProduct(new ProductVO(dto.getId(), dto.getName(), dto.getPremium(), -1, -1, -1, -1, -1, 0));
         return dto;
