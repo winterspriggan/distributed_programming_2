@@ -6,16 +6,23 @@ import Button from "../../../../common/Button/Button";
 import SelectInput from "../../../../common/SelectInput/SelectInput";
 import swal from "sweetalert";
 import './Underwrite.css'
+import {isWhitespace} from "../../../../common/utils";
 
 export default function Underwrite({employee}) {
 
     const [products, setProducts] = useState(null);
     const [selectedProduct, setSelectedProduct] = useState(null);
-    const [seniorRate, setSeniorRate] = useState('');
-    const [maleRate, setMaleRate] = useState('');
-    const [femaleRate, setFemaleRate] = useState('');
-    const [occupationalHazardRate, setOccupationalHazardRate] = useState('');
-    const [smokingRate, setSmokingRate] = useState('');
+    const [seniorRate, setSeniorRate] = useState(1.0);
+    const [maleRate, setMaleRate] = useState(1.0);
+    const [femaleRate, setFemaleRate] = useState(1.0);
+    const [occupationalHazardRate, setOccupationalHazardRate] = useState(1.0);
+    const [smokingRate, setSmokingRate] = useState(1.0);
+
+    function checkInput(s) {
+        if (isWhitespace(s)) return false;
+        console.log(typeof s);
+        return typeof s === 'number';
+    }
 
     useEffect(() => {
         axios.get(ENDPOINT_GET_PRODUCTS)
@@ -38,6 +45,16 @@ export default function Underwrite({employee}) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!checkInput(seniorRate) || !checkInput(maleRate)
+            || !checkInput(femaleRate) || !checkInput(occupationalHazardRate) || !checkInput(smokingRate)) {
+            swal({
+                title: '요율 결정 실패',
+                text: '숫자만 입력해주세요.',
+                icon: 'error',
+                button: '확인',
+            });
+            return;
+        }
         await axios.post(ENDPOINT_POST_UNDERWRITE, null, {
             params: {
                 id: products.find(p => p.name === selectedProduct)?.id,
