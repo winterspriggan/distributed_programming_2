@@ -4,6 +4,7 @@ import swal from "sweetalert";
 import TextInput from "../../../../common/TextInput/TextInput";
 import Button from "../../../../common/Button/Button";
 import {ENDPOINT_POST_PRODUCT} from "../../../../common/Endpoint/Endpoint";
+import {isWhitespace} from "../../../../common/utils.js";
 import './DevelopProduct.css'
 
 export default function DevelopProduct({employee}) {
@@ -13,6 +14,24 @@ export default function DevelopProduct({employee}) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (isWhitespace(name)){
+            swal({
+                title: '상품 등록 실패',
+                text: '공백이 입력되었습니다.',
+                icon: 'error',
+                button: '확인',
+            });
+            return;
+        }
+        if (typeof premium !== 'number'){
+            swal({
+                title: '상품 등록 실패',
+                text: '보험료를 숫자로 입력해주세요',
+                icon: 'error',
+                button: '확인',
+            });
+            return;
+        }
         await axios.post(ENDPOINT_POST_PRODUCT, null, {
             params: {
                 name: name,

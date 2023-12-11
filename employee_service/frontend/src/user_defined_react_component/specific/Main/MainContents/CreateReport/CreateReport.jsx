@@ -7,12 +7,13 @@ import {
 } from "../../../../common/Endpoint/Endpoint";
 import swal from "sweetalert";
 import Button from "../../../../common/Button/Button";
+import {isWhitespace} from "../../../../common/utils";
 
 function ClaimRecord({claim, employee}) {
     function submitReport() {
 
         let report;
-        let compensation;
+        let compensation = 0;
 
         swal({
             text: '조사보고서 입력',
@@ -24,6 +25,15 @@ function ClaimRecord({claim, employee}) {
                 content: "input",
             }).then(input => {
                 compensation = input
+                if (isWhitespace(report) || isNaN(compensation)){
+                    swal({
+                        title: '조사보고서 제출 실패',
+                        text: '입력을 다시 확인해주세요.',
+                        icon: 'error',
+                        button: '확인',
+                    });
+                    return;
+                }
                 axios.post(ENDPOINT_POST_REPORT, null, {
                     params: {
                         id: claim.id,
