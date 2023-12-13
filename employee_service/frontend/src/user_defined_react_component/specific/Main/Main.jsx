@@ -19,8 +19,6 @@ export default function Main({employee}) {
                     <MenuButton text={'조사보고서 제출'} name={'CreateReport'} setMainContents={setMainContents}></MenuButton>
                     <MenuButton text={'청구 심사'} name={'ReviewClaim'} setMainContents={setMainContents}></MenuButton>
                     <MenuButton text={'보상금 지급'} name={'PayCompensation'} setMainContents={setMainContents}></MenuButton>
-                    <MenuButton text={'고객 통계 조회'} name={'ViewCustomerStatistics'} setMainContents={setMainContents}></MenuButton>
-                    <MenuButton text={'제지급금 분석'} name={'ViewClaimStatistics'} setMainContents={setMainContents}></MenuButton>
                 </ul>
             </div>
             <div className="main_contents">
