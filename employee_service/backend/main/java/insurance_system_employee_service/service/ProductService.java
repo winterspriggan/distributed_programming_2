@@ -40,7 +40,8 @@ public class ProductService {
         return products;
     }
 
-    public void underwrite(ProductVO vo) {
+    public boolean underwrite(ProductVO vo) {
+        if(vo.getOccupationHazardRate()<=0 || vo.getSeniorRate()<=0 || vo.getMaleRate() <=0 || vo.getFemaleRate()<=0) return false;
         ProductEntity temp = productRepository.getProductById(vo.getId());
          ProductEntity product = ProductEntity.builder()
                  .id(temp.getId())
@@ -53,6 +54,7 @@ public class ProductService {
                 .build();
          excuteRules(product);
         productRepository.save(product);
+        return true;
     }
 
     public ProductVO developProduct(ProductVO vo) throws SameNameException {

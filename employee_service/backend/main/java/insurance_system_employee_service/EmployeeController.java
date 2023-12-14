@@ -68,8 +68,7 @@ public class EmployeeController {
                 , dto.getOccupational_hazard_rate()
                 , dto.getSmoking_rate()
         );
-        productService.underwrite(productVO);
-        return true;
+        return productService.underwrite(productVO);
     }
 
     @GetMapping("board/get_all")
@@ -89,8 +88,7 @@ public class EmployeeController {
                 , dto.getAnswerer()
                 , dto.getIs_answered()
         );
-        boardService.createAnswer(boardVO);
-        return true;
+        return boardService.createAnswer(boardVO);
     }
 
     @GetMapping("claim/get_all_by_employee_id")
@@ -118,8 +116,7 @@ public class EmployeeController {
         ClaimVO claimVO = new ClaimVO(dto.getId()
                 , dto.getCompensation()
                 , dto.getReport());
-        claimService.submitReport(claimVO);
-        return true;
+        return claimService.submitReport(claimVO);
     }
 
     @PostMapping("claim/review_claim")

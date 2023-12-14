@@ -38,7 +38,7 @@ public class BoardService {
         return boards;
     }
 
-    public BoardVO createAnswer(BoardVO vo) {
+    public boolean createAnswer(BoardVO vo) {
         if(vo.getAnswer().trim().isEmpty()) throw new NullPointerException();
         BoardEntity temp = boardRepository.getBoardByID(vo.getId());
         BoardEntity board = BoardEntity.builder()
@@ -51,7 +51,7 @@ public class BoardService {
                 .build();
         excuteRules(board);
         boardRepository.save(board);
-        return vo;
+        return true;
     }
 
     public void excuteRules(BoardEntity board) {
