@@ -1,8 +1,10 @@
 package insurance_system_customer_service.jpa.metric;
 
+import com.ctc.wstx.shaded.msv_core.driver.textui.Debug;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +16,12 @@ import java.util.Date;
 import java.util.UUID;
 
 @Component
+@Slf4j
 public class ServerMetricCollector {
+
+    private static final Double CPU_USAGE_LIMIT = 0.5;
+    private static final int HTTP_REQUEST_COUNT_LIMIT = 30;
+
 
     private final CustomerServerMetricRepository customerServerMetricRepository;
     private final RestTemplate restTemplate;
@@ -34,6 +41,11 @@ public class ServerMetricCollector {
         } else return null;
     }
 
+    public void alert(CustomerServerMetric metric){
+        if (metric.getCpuUsage() > CPU_USAGE_LIMIT) log.warn("CPU usage has exceeded the limit.");
+        if (metric.getHttpRequestCount() > HTTP_REQUEST_COUNT_LIMIT) log.warn("HTTP Request Count has exceeded the limit.");
+    }
+
     @Scheduled(fixedRate = 30000)
     public void saveMemoryMetrics() throws JsonProcessingException {
         CustomerServerMetric customerServerMetric = new CustomerServerMetric();
@@ -43,6 +55,7 @@ public class ServerMetricCollector {
         customerServerMetric.setHttpRequestCount(getMeasurementValue("http://localhost:40021/actuator/metrics/http.server.requests"));
         customerServerMetric.setUpTime(getMeasurementValue("http://localhost:40021/actuator/metrics/process.uptime"));
         customerServerMetric.setTimestamp(new Date());
+        alert(customerServerMetric);
         customerServerMetricRepository.save(customerServerMetric);
     }
 }
